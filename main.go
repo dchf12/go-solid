@@ -27,7 +27,7 @@ type shape interface {
 type outPrinter struct{}
 
 func (op outPrinter) toText(s shape) string {
-	return fmt.Sprintf("Area: %v\n", s.area())
+	return fmt.Sprintf("Area: %f", s.area())
 }
 
 func main() {
