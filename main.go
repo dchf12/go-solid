@@ -9,34 +9,32 @@ type circle struct {
 	radius float32
 }
 
-func (c circle) area() float32 {
-	return math.Pi * c.radius * c.radius
-}
-
 type square struct {
 	sideLen float32
 }
 
-func (s square) area() float32 {
-	return s.sideLen * s.sideLen
+type calculator struct {
+	total float32
 }
 
-type shape interface {
-	area() float32
-}
-type outPrinter struct{}
-
-func (op outPrinter) toText(s shape) string {
-	return fmt.Sprintf("Area: %f", s.area())
+func (c calculator) sumAreas(shapes ...interface{}) float32 {
+	var sum float32
+	for _, s := range shapes {
+		switch s.(type) {
+		case circle:
+			r := s.(circle).radius
+			sum += math.Pi * r * r
+		case square:
+			l := s.(square).sideLen
+			sum += l * l
+		}
+	}
+	return sum
 }
 
 func main() {
 	c := circle{radius: 5}
-	c.area()
 	s := square{sideLen: 2}
-	s.area()
-
-	o := outPrinter{}
-	fmt.Println(o.toText(c))
-	fmt.Println(o.toText(s))
+	calc := calculator{}
+	fmt.Println("total of areas : ", calc.sumAreas(c, s))
 }
