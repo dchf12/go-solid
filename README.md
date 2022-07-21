@@ -1,2 +1,2 @@
-# go-solid
+# SOLID
 Golang's implementation of SOLID principles
