@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -9,16 +8,16 @@ type circle struct {
 	radius float32
 }
 
-func (c circle) area() {
-	fmt.Printf("circle area: %f\n", c.radius*c.radius*math.Pi)
+func (c circle) area() float32 {
+	return math.Pi * c.radius * c.radius
 }
 
 type square struct {
 	sideLen float32
 }
 
-func (s square) area() {
-	fmt.Printf("square area: %f\n", s.sideLen*s.sideLen)
+func (s square) area() float32 {
+	return s.sideLen * s.sideLen
 }
 func main() {
 	c := circle{radius: 5}
