@@ -35,4 +35,8 @@ func main() {
 	c.area()
 	s := square{sideLen: 2}
 	s.area()
+
+	o := outPrinter{}
+	fmt.Println(o.toText(c))
+	fmt.Println(o.toText(s))
 }
