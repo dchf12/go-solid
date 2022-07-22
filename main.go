@@ -49,6 +49,9 @@ func (c calculator) sumAreas(shapes ...shape) float32 {
 func main() {
 	c := circle{radius: 5}
 	s := square{sideLen: 2}
+	t := triangle{height: 10, base: 5}
+
 	calc := calculator{}
-	fmt.Println("total of areas : ", calc.sumAreas(c, s))
+
+	fmt.Println(calc.sumAreas(c, s, t))
 }
