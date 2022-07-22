@@ -5,6 +5,10 @@ import (
 	"math"
 )
 
+type shape interface {
+	area() float32
+}
+
 type circle struct {
 	radius float32
 }
@@ -21,22 +25,33 @@ func (s square) area() float32 {
 	return s.sideLen * s.sideLen
 }
 
-type shape interface {
-	area() float32
+type triangle struct {
+	height float32
+	base   float32
 }
-type outPrinter struct{}
 
-func (op outPrinter) toText(s shape) string {
-	return fmt.Sprintf("Area: %f", s.area())
+func (t triangle) area() float32 {
+	return t.height * t.base / 2
+}
+
+type calculator struct {
+	total float32
+}
+
+func (c calculator) sumAreas(shapes ...shape) float32 {
+	var sum float32
+	for _, s := range shapes {
+		sum += s.area()
+	}
+	return sum
 }
 
 func main() {
 	c := circle{radius: 5}
-	c.area()
 	s := square{sideLen: 2}
-	s.area()
+	t := triangle{height: 10, base: 5}
 
-	o := outPrinter{}
-	fmt.Println(o.toText(c))
-	fmt.Println(o.toText(s))
+	calc := calculator{}
+
+	fmt.Println(calc.sumAreas(c, s, t))
 }
