@@ -5,6 +5,35 @@ import (
 	"math"
 )
 
+type transport interface {
+	getName() string
+}
+
+type vehicle struct {
+	name string
+}
+
+func (c vehicle) getName() string {
+	return c.name
+}
+
+type car struct {
+	vehicle
+	wheel int
+	gates int
+}
+
+type motocycle struct {
+	vehicle
+	wheel int
+}
+
+type printer struct{}
+
+func (p printer) printTransportName(t transport) {
+	fmt.Println("name: ", t.getName())
+}
+
 type shape interface {
 	area() float32
 }
@@ -54,4 +83,19 @@ func main() {
 	calc := calculator{}
 
 	fmt.Println(calc.sumAreas(c, s, t))
+
+	v := vehicle{name: "Ford"}
+	car := car{
+		vehicle: vehicle{name: "car-name"},
+		wheel:   4,
+		gates:   2,
+	}
+	m := motocycle{
+		vehicle: vehicle{name: "motocycle-name"},
+		wheel:   2,
+	}
+	p := printer{}
+	p.printTransportName(v)
+	p.printTransportName(car)
+	p.printTransportName(m)
 }
