@@ -108,6 +108,10 @@ func (c calculator) sumAreas(shapes ...shape) float32 {
 	return sum
 }
 
+type DBConn interface {
+	QuerySomeData() []string
+}
+
 type MySQL struct {
 	// some properties
 }
@@ -117,7 +121,7 @@ func (db MySQL) QuerySomeData() []string {
 }
 
 type MyRepository struct {
-	db MySQL
+	db DBConn
 }
 
 func (r MyRepository) GetData() []string {
