@@ -108,6 +108,22 @@ func (c calculator) sumAreas(shapes ...shape) float32 {
 	return sum
 }
 
+type MySQL struct {
+	// some properties
+}
+
+func (db MySQL) QuerySomeData() []string {
+	return []string{"inf1", "inf2", "inf3"}
+}
+
+type MyRepository struct {
+	db MySQL
+}
+
+func (r MyRepository) GetData() []string {
+	return r.db.QuerySomeData()
+}
+
 func main() {
 	c := circle{radius: 5}
 	s := square{sideLen: 2}
@@ -136,4 +152,8 @@ func main() {
 	fmt.Printf("cube: %v, %v\n", cube.area(), cube.volume())
 	fmt.Printf("%v\n", areaVolumeSum(cube))
 	fmt.Printf("%v\n", areaSum(cube, s))
+
+	mysqlDB := MySQL{}
+	repo := MyRepository{db: mysqlDB}
+	fmt.Println(repo.GetData())
 }
