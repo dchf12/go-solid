@@ -38,6 +38,11 @@ type shape interface {
 	area() float32
 }
 
+type object interface {
+	shape
+	volume() float32
+}
+
 type circle struct {
 	radius float32
 }
@@ -52,6 +57,34 @@ type square struct {
 
 func (s square) area() float32 {
 	return s.sideLen * s.sideLen
+}
+
+type cube struct {
+	sideLen float32
+}
+
+func (c cube) area() float32 {
+	return c.sideLen * c.sideLen
+}
+
+func (c cube) volume() float32 {
+	return c.sideLen * c.sideLen * c.sideLen
+}
+
+func areaSum(shapes ...shape) float32 {
+	var sum float32
+	for _, s := range shapes {
+		sum += s.area()
+	}
+	return sum
+}
+
+func areaVolumeSum(shapes ...object) float32 {
+	var sum float32
+	for _, s := range shapes {
+		sum += s.area() + s.volume()
+	}
+	return sum
 }
 
 type triangle struct {
@@ -98,4 +131,9 @@ func main() {
 	p.printTransportName(v)
 	p.printTransportName(car)
 	p.printTransportName(m)
+
+	cube := cube{sideLen: 5}
+	fmt.Printf("cube: %v, %v\n", cube.area(), cube.volume())
+	fmt.Printf("%v\n", areaVolumeSum(cube))
+	fmt.Printf("%v\n", areaSum(cube, s))
 }
