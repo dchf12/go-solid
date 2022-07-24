@@ -36,6 +36,7 @@ func (p printer) printTransportName(t transport) {
 
 type shape interface {
 	area() float32
+	volume() float32
 }
 
 type circle struct {
@@ -52,6 +53,37 @@ type square struct {
 
 func (s square) area() float32 {
 	return s.sideLen * s.sideLen
+}
+
+func (s square) volume() float32 {
+	return 0
+}
+
+type cube struct {
+	sideLen float32
+}
+
+func (c cube) area() float32 {
+	return c.sideLen * c.sideLen
+}
+func (c cube) volume() float32 {
+	return c.sideLen * c.sideLen * c.sideLen
+}
+
+func areaSum(shapes ...shape) float32 {
+	var sum float32
+	for _, s := range shapes {
+		sum += s.area()
+	}
+	return sum
+}
+
+func areaVolumeSum(shapes ...shape) float32 {
+	var sum float32
+	for _, s := range shapes {
+		sum += s.area() + s.volume()
+	}
+	return sum
 }
 
 type triangle struct {
