@@ -36,6 +36,10 @@ func (p printer) printTransportName(t transport) {
 
 type shape interface {
 	area() float32
+}
+
+type object interface {
+	shape
 	volume() float32
 }
 
@@ -55,10 +59,6 @@ func (s square) area() float32 {
 	return s.sideLen * s.sideLen
 }
 
-func (s square) volume() float32 {
-	return 0
-}
-
 type cube struct {
 	sideLen float32
 }
@@ -66,6 +66,7 @@ type cube struct {
 func (c cube) area() float32 {
 	return c.sideLen * c.sideLen
 }
+
 func (c cube) volume() float32 {
 	return c.sideLen * c.sideLen * c.sideLen
 }
@@ -78,7 +79,7 @@ func areaSum(shapes ...shape) float32 {
 	return sum
 }
 
-func areaVolumeSum(shapes ...shape) float32 {
+func areaVolumeSum(shapes ...object) float32 {
 	var sum float32
 	for _, s := range shapes {
 		sum += s.area() + s.volume()
@@ -130,4 +131,9 @@ func main() {
 	p.printTransportName(v)
 	p.printTransportName(car)
 	p.printTransportName(m)
+
+	cube := cube{sideLen: 5}
+	fmt.Printf("cube: %v, %v\n", cube.area(), cube.volume())
+	fmt.Printf("%v\n", areaVolumeSum(cube))
+	fmt.Printf("%v\n", areaSum(cube, s))
 }
